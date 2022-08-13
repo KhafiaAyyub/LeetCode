@@ -7,46 +7,34 @@ class Solution
         
         Map<String,Integer> word_frq=new HashMap<>();
         List<Integer> ans=new ArrayList<>();
-        
-        // Map store the frequency of every word in words[]
-        
         for(String str:words)
-            word_frq.put(str,word_frq.getOrDefault(str,0)+1);
-        
+        word_frq.put(str,word_frq.getOrDefault(str,0)+1);
         int wordlen=words[0].length();  
-        
         String[] str=new String[s.length()];
-        
         for(int i=0;i<wordlen;i++)
         {
-            Map<String,Integer> frq=new HashMap<>();  // count frequency of words inside the window
+            Map<String,Integer> frq=new HashMap<>();  
             
-            int begin=i,size=0; // size is the no. of window and begin is the starting index of window
-            
-            // s.length()-wordlen -> based on observation
-            
+            int begin=i,size=0;             
             for(int j=i;j<=s.length()-wordlen;j+=wordlen)
             {
-                str[j]=s.substring(j,j+wordlen);  // window
+                str[j]=s.substring(j,j+wordlen);  
                 if(word_frq.containsKey(str[j]))
                 {
-                    begin= begin==-1? j:begin; // begin=-1 means new window need to be started
+                    begin= begin==-1? j:begin; 
                     frq.put(str[j],frq.getOrDefault(str[j],0)+1); 
                     size++; 
                     
-                    if(size==words.length)  // substring may be possible
+                    if(size==words.length)  
                     {
                         if(frq.equals(word_frq))
-                            ans.add(begin);
-                        
-                        // sliding the window 
-                        
+                            ans.add(begin);  
                         frq.put(str[begin],frq.get(str[begin])-1); 
                         begin+=wordlen;  // new starting index
                         size--;
                     }
                 }
-                else  // reset window
+                else  
                 {
                     begin=-1;
                     size=0;
